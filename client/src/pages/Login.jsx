@@ -36,7 +36,7 @@ const Login = () => {
                 />
               </div>
 
-              <div className="registration-form">
+              <div className="login-form">
                 <h1 className="main-heading mb-3">Login Form</h1>
 
                 <br />

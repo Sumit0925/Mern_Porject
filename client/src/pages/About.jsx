@@ -1,4 +1,6 @@
 import React from "react";
+import { Analytics } from "../components/Analytics";
+import { NavLink } from "react-router-dom";
 
 const About = () => {
   return (
@@ -33,12 +35,12 @@ const About = () => {
                 available 24/7.
               </p>
               <div className="btn btn-group">
-                <a href="/contact">
+                <NavLink to="/contact">
                   <button className="btn">Connect Now</button>
-                </a>
-                <a href="/services">
+                </NavLink>
+                <NavLink to="/services">
                   <button className="secondary-btn">Learn More</button>
-                </a>
+                </NavLink>
               </div>
             </div>
             <div className="hero-image">
@@ -52,27 +54,7 @@ const About = () => {
         </section>
 
         {/* second section */}
-      <section className="section-analytics">
-        <div className="container grid grid-four-cols">
-        <div className="div1">
-          <h2>50+</h2>
-          <p>registered companies</p>
-        </div>
-        <div className="div1">
-          <h2>100,00+</h2>
-          <p>Happy Clients</p>
-        </div>
-        <div className="div1">
-          <h2>500+</h2>
-          <p>Well known Developers</p>
-        </div>
-        <div className="div1">
-          <h2>24/7</h2>
-          <p>service</p>
-        </div>
-        </div>
-
-      </section>
+              <Analytics/>
       </main>
     </>
   );

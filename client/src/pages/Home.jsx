@@ -1,4 +1,6 @@
 import React from "react";
+import { Analytics } from "../components/Analytics";
+import { NavLink } from "react-router-dom";
 
 function Home() {
   return (
@@ -38,27 +40,8 @@ function Home() {
       </main>
 
       {/* second section */}
-      <section className="section-analytics">
-        <div className="container grid grid-four-cols">
-        <div className="div1">
-          <h2>50+</h2>
-          <p>registered companies</p>
-        </div>
-        <div className="div1">
-          <h2>100,00+</h2>
-          <p>Happy Clients</p>
-        </div>
-        <div className="div1">
-          <h2>500+</h2>
-          <p>Well known Developers</p>
-        </div>
-        <div className="div1">
-          <h2>24/7</h2>
-          <p>service</p>
-        </div>
-        </div>
 
-      </section>
+      <Analytics/>
 
       {/* 3rd section  */}
       <section className="section-hero">
@@ -83,12 +66,12 @@ function Home() {
               the digital age.
             </p>
             <div className="btn btn-group">
-              <a href="/contact">
+              <NavLink to="/contact">
                 <button className="btn">connect now</button>
-              </a>
-              <a href="/services">
+              </NavLink>
+              <NavLink to="/services">
                 <button className="btn secondary-btn">learn more</button>
-              </a>
+              </NavLink>
             </div>
           </div>
         </div>

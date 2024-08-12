@@ -1,11 +1,12 @@
-import React from 'react'
+import React from "react";
+import "./Footer.css"
 
 export const Footer = () => {
   return (
     <>
-    <footer>
+      <footer>
         <p>@devtechincal {new Date().getFullYear()}</p>
-    </footer>
+      </footer>
     </>
-  )
-}
+  );
+};

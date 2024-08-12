@@ -1,33 +1,53 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+
+  
   const [user, setUser] = useState({
     username: "",
     email: "",
     phone: "",
     password: "",
   });
-
+  
   const handleChange = (e) => {
-    console.log(e);
-
+    // console.log(e);
+    
     let name = e.target.name;
     let value = e.target.value;
-
+    
     setUser({
       ...user,
       [name]: value, //* [name] is a dynamic value i.e username,email,phone,password
     });
   };
+  
+  const navigate = useNavigate();
 
   //* Hanlde form submit
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e,req,res) => {
     e.preventDefault();
     console.log(user);
-  };
-
-  const viewPassword = (e) => {
-    e.target.type = "text";
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/auth/register",
+        user
+      );
+      console.log(response);
+      if (response.status == "201") {
+        setUser({
+          username: "",
+          email: "",
+          phone: "",
+          password: "",
+        });
+        navigate('/login');
+      }
+    } catch (error) {
+      console.log("Registration", error);
+    }
   };
 
   return (

@@ -36,6 +36,8 @@ const Login = () => {
       });
             console.log(response);
       if (response.ok) {
+        const res_data = await response.json();
+        console.log(res_data);
         setUser({
           email: "",
           password: "",

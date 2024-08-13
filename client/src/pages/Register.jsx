@@ -27,16 +27,22 @@ const Register = () => {
   const navigate = useNavigate();
 
   //* Hanlde form submit
-  const handleSubmit = async (e,req,res) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(user);
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/register",
-        user
+        user,{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
       );
       console.log(response);
       if (response.status == "201") {
+
         setUser({
           username: "",
           email: "",

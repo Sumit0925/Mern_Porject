@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const URL = "http://localhost:3000/api/auth/login";
 
@@ -10,7 +11,7 @@ const Login = () => {
   });
 
   const handleChange = (e) => {
-    console.log(e);
+    // console.log(e);
     let name = e.target.name;
     let value = e.target.value;
 
@@ -21,6 +22,8 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
+
+  const { storeTokenInLS } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -34,16 +37,17 @@ const Login = () => {
         },
         body: JSON.stringify(user),
       });
-            console.log(response);
+      console.log(response);
       if (response.ok) {
         const res_data = await response.json();
-        console.log(res_data);
+        storeTokenInLS(res_data.token);
+
         setUser({
           email: "",
           password: "",
         });
         navigate("/");
-        
+
         alert("Login Successfull");
       } else {
         alert("Invalid Credientials");

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const Register = () => {
 
@@ -25,6 +26,7 @@ const Register = () => {
   };
   
   const navigate = useNavigate();
+  const {storeTokenInLS} = useAuth();   //* form Context API
 
   //* Hanlde form submit
   const handleSubmit = async (e) => {
@@ -33,16 +35,18 @@ const Register = () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/register",
-        user,{
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          }
-        }
+        user,
+        // {
+        //   method: "POST",
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   }
+        // }
       );
       console.log(response);
       if (response.status == "201") {
-
+        // console.log("token",response.data);
+        storeTokenInLS(response.data.token);
         setUser({
           username: "",
           email: "",

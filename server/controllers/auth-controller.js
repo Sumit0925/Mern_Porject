@@ -1,7 +1,9 @@
 const User = require("../models/user-model");
 const bcrypt = require("bcryptjs");
 
+//^---------------------
 //^ HOME LOGIC
+//^-------------------
 
 const home = async (req, res) => {
     try {
@@ -15,7 +17,9 @@ const home = async (req, res) => {
     }
 }
 
+//^---------------------
 //^ REGISTER LOGIC
+//^-------------------
 
 const register = async (req, res) => {
     try {
@@ -64,7 +68,9 @@ const register = async (req, res) => {
     }
 }
 
-//^ REGISTER LOGIC
+//^---------------------
+//^ LOGIN LOGIC
+//^-------------------
 
 const login = async (req, res) => {
     try {
@@ -92,7 +98,7 @@ const login = async (req, res) => {
                 token: await userExist.generateToken(),
                 userID: userExist._id.toString(),
             })
-        } else{
+        } else {
             res.status(401).send({ msg: 'Invalid email or password' });
         }
 
@@ -104,4 +110,18 @@ const login = async (req, res) => {
 
 }
 
-module.exports = { home, register, login };
+//^---------------------
+//^ to send user data -USER LOGIC
+//^-------------------
+
+const user = (req, res) => {
+    try {
+        const userData = req.user;
+        console.log(userData);
+        return res.status(200).json({ msg: userData });
+    } catch (error) {
+        console.log(`error form the user route ${error}`)
+    }
+}
+
+module.exports = { home, register, login, user };

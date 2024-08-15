@@ -114,13 +114,13 @@ const login = async (req, res) => {
 //^ to send user data -USER LOGIC
 //^-------------------
 
-const user = (req, res) => {
+const user = async (req, res) => {
     try {
         const userData = req.user;
         console.log(userData);
-        return res.status(200).json({ msg: userData });
+        return res.status(200).json({ userData });
     } catch (error) {
-        console.log(`error form the user route ${error}`)
+        console.log(`error form the user route ${error}`);
     }
 }
 

@@ -3,7 +3,7 @@ const router = express.Router();
 const authcontrollers = require('../controllers/auth-controller');
 const validate = require('../middlewares/validate-middleware');
 const { signupSchema, loginSchema, } = require('../validators/auth-validator');
-const authMiddleware = require('../middlewares/auth-middleware');
+const authMiddleware = require('../middlewares/auth-middleware');   
 
 
 // router.get('/',async(req,res)=>{

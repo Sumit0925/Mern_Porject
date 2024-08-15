@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Analytics } from "../components/Analytics";
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../store/auth";
 
 const About = () => {
+  const { user } = useAuth();
+
   return (
     <>
       <main>
         <section className="section-hero">
           <div className="container grid grid-two-cols">
             <div className="hero-content">
-              <p>Welcome, Dev Technical</p>
+              <p>Welcome, {user ? `${user.username} to our website` : `to our website`} </p>
               <h1>Why Choose Us?</h1>
               <p>
                 Expertise: Our team consists of experienced IT progfessionals
@@ -44,17 +47,13 @@ const About = () => {
               </div>
             </div>
             <div className="hero-image">
-              <img
-                src="/images/about.png"
-                alt="girl and a boy"
-                
-              />
+              <img src="/images/about.png" alt="girl and a boy" />
             </div>
           </div>
         </section>
 
         {/* second section */}
-              <Analytics/>
+        <Analytics />
       </main>
     </>
   );

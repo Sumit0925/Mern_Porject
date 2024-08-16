@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useAuth } from "../store/auth";
+import axios from "axios";
 
 export const Contact = () => {
   const [contact, setContact] = useState({
@@ -8,16 +9,18 @@ export const Contact = () => {
     message: "",
   });
 
+  //* Fetching loggedIn user data
   const [userData, setUserData] = useState(true);
   const { user } = useAuth();
   if (userData && user) {
     setContact({
       username: user.username,
       email: user.email,
-      password: "",
+      message: "",
     });
     setUserData(false);
   }
+
   const handleChange = (e) => {
     // console.log(e);
     let name = e.target.name;
@@ -29,9 +32,25 @@ export const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(contact);
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/form/contact",
+        contact
+      );
+      // console.log(response);
+      if (response.status == "200") {
+        setContact({
+          ...contact,
+          message: "",
+        });
+        alert("Message send sucessfully");
+      }
+    } catch (error) {
+      console.error("contact form error");
+    }
   };
 
   return (

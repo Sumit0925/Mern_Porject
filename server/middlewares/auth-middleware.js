@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
 
 const authMiddleware = async (req, res, next) => {
+
   const token = req.header("Authorization");
 
   if (!token) {
@@ -14,9 +15,9 @@ const authMiddleware = async (req, res, next) => {
   // console.log("token from auth middleware",token);
 
   //* Assuming tokem is in the format "Bearer <jwtToken>, Removing the Bearer prefix";
-  const jwtToken = token.replace("Bearer", "").trim();
+  const jwtToken = token.replace("Bearer", " ").trim();
 
-  // console.log("token from auth middleware",jwtToken);
+  console.log("token from auth middleware", jwtToken);
 
   try {
     //! verifying the jwt Token
@@ -29,7 +30,7 @@ const authMiddleware = async (req, res, next) => {
     console.log("User Data", userData);
 
     req.user = userData;
-    req.token = token;
+    req.token = jwtToken;
     req.UserID = userData._id;
 
     next();

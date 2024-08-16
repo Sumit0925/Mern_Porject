@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
 //* creating provider
 export const AuthProvider = ({ children }) => {
@@ -15,42 +15,52 @@ export const AuthProvider = ({ children }) => {
   // console.log(isLoggedIn);
 
   //! JWT AUTHENTICATION -  To Get Currently loggedIN user data
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState();
+  // ^ "try" block with "axios"
+  // if (isLoggedIn) {
+  //   const userAuthentication = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "http://localhost:3000/api/auth/user",
+  //         {
+  //           method: "GET",
+  //           headers: {
+  //             Authorization: `Bearer ${token}`,
+  //           },
+  //         }
+  //       );
+  //       console.log("user data response", response);
+  //       if (response.status == "200") {
+  //         const data = await response.data.userData;
+  //         // console.log(data);
+  //         setUser(data);
+  //       }
+  //     } catch (err) {
 
+  //       console.error(`Error fetching user data ${err}`);
+  //     }
+  //   };
+  //   useEffect(() => {
+  //     userAuthentication();
+  //   }, []);
+  // }
+
+  //^ "try" block with "fetch"
   const userAuthentication = async () => {
-    //^ "try" block with "axios"
-    // try {
-    //   const response = await axios.get("http://localhost:3000/api/auth/user",
-    //      {
-    //     method: "GET",
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },}
-    //   );
-    //   console.log("user data response",response);
-    //   if (response.status == "200") {
-    //     const data =await response.data.userData;
-    //     console.log(data);
-    //     setUser(data);
-    //   }
-    // }
-
-    //^ "try" block with "fetch"
     try {
-        const response = await fetch("http://localhost:3000/api/auth/user",
-         {
+      const response = await fetch("http://localhost:3000/api/auth/user", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
-        },}
-      );
-      if(response.ok){
+        },
+      });
+      if (response.ok) {
         const data = await response.json();
-        console.log(data.userData)
+        // console.log(data.userData)
         setUser(data.userData);
       }
-    } catch (error) {
-      console.error("Error fetching user data");
+    } catch (err) {
+      console.error(`Error fetching user data ${err}`);
     }
   };
 
@@ -58,6 +68,8 @@ export const AuthProvider = ({ children }) => {
     userAuthentication();
   }, []);
 
+
+  
   //* Takling the logout fuctionality
   const LogoutUser = () => {
     setToken("");

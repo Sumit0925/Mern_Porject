@@ -37,7 +37,7 @@ const Login = () => {
         },
         body: JSON.stringify(user),
       });
-      console.log(response);
+      // console.log(response);
       if (response.ok) {
         const res_data = await response.json();
         storeTokenInLS(res_data.token);

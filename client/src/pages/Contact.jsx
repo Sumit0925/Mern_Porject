@@ -34,7 +34,7 @@ export const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(contact);
+    // console.log(contact);
     try {
       const response = await axios.post(
         "http://localhost:3000/api/form/contact",

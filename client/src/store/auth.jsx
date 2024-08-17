@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
   // console.log(isLoggedIn);
 
   //! JWT AUTHENTICATION -  To Get Currently loggedIN user data
-  const [user, setUser] = useState();
+  const [user, setUser] = useState("");
   // ^ "try" block with "axios"
   // if (isLoggedIn) {
   //   const userAuthentication = async () => {
@@ -64,12 +64,32 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  //* takling fetching service data from database
+  const [services, setServices] = useState([]);
+  const getServices = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/data/service", {
+      });
+      console.log(response);
+      if (response.statusText == "OK") {
+        // console.log(response.data.serviceData);
+        setServices(response.data.serviceData);
+      }
+      // if(response.ok){
+      //   const data = await response.json();
+      //   console.log(data)
+      //   setServices(data.serviceData);
+      // }
+    } catch (error) {
+      console.error(`Error fetching Service data ${error}`);
+    }
+  };
+
   useEffect(() => {
     userAuthentication();
+    getServices();
   }, []);
 
-
-  
   //* Takling the logout fuctionality
   const LogoutUser = () => {
     setToken("");
@@ -78,7 +98,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <>
       <AuthContext.Provider
-        value={{ storeTokenInLS, LogoutUser, isLoggedIn, user }}
+        value={{ storeTokenInLS, LogoutUser, isLoggedIn, user, services }}
       >
         {children}
       </AuthContext.Provider>

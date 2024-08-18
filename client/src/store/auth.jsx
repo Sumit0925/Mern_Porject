@@ -5,17 +5,29 @@ export const AuthContext = createContext();
 
 //* creating provider
 export const AuthProvider = ({ children }) => {
+
   //* remember to write {children} in small letters not like this {Children}
   const [token, setToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState("");
+  const [services, setServices] = useState([]);
+  const AuthorizationToken = `Bearer ${token}`;
+
+
   const storeTokenInLS = (serverToken) => {
+    setToken(serverToken);
     return localStorage.setItem("token", serverToken);
   };
 
   let isLoggedIn = !!token; //* If the token is present it will be "True" otherwise it will be "Flase"
   // console.log(isLoggedIn);
+  
+  //* Takling the logout fuctionality
+  const LogoutUser = () => {
+    setToken("");
+    return localStorage.removeItem("token");
+  };
 
   //! JWT AUTHENTICATION -  To Get Currently loggedIN user data
-  const [user, setUser] = useState("");
   // ^ "try" block with "axios"
   // if (isLoggedIn) {
   //   const userAuthentication = async () => {
@@ -46,55 +58,51 @@ export const AuthProvider = ({ children }) => {
   // }
 
   //^ "try" block with "fetch"
+
   const userAuthentication = async () => {
     try {
       const response = await fetch("http://localhost:3000/api/auth/user", {
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers:{
+          Authorization : AuthorizationToken
+        }
       });
       if (response.ok) {
         const data = await response.json();
-        // console.log(data.userData)
-        setUser(data.userData);
+        // our main goal is to get the user data 👇
+        // console.log(data);
+      setUser(data.userData);
+      } else {
+        console.error("Error fetching user data");
       }
-    } catch (err) {
-      console.error(`Error fetching user data ${err}`);
+    } catch (error) {
+      console.log(error);
     }
   };
 
   //* takling fetching service data from database
-  const [services, setServices] = useState([]);
   const getServices = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/api/data/service", {
-      });
-      console.log(response);
+      const response = await axios.get(
+        "http://localhost:3000/api/data/service"
+      );
+      // console.log(response);
       if (response.statusText == "OK") {
         // console.log(response.data.serviceData);
         setServices(response.data.serviceData);
       }
-      // if(response.ok){
-      //   const data = await response.json();
-      //   console.log(data)
-      //   setServices(data.serviceData);
-      // }
     } catch (error) {
       console.error(`Error fetching Service data ${error}`);
     }
   };
 
   useEffect(() => {
-    userAuthentication();
+    if(isLoggedIn){
+      userAuthentication();
+    }
     getServices();
   }, []);
 
-  //* Takling the logout fuctionality
-  const LogoutUser = () => {
-    setToken("");
-    return localStorage.removeItem("token");
-  };
   return (
     <>
       <AuthContext.Provider

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authcontrollers = require('../controllers/auth-controller');
+const authControllers = require('../controllers/auth-controller');
 const validate = require('../middlewares/validate-middleware');
 const { signupSchema, loginSchema, } = require('../validators/auth-validator');
 const authMiddleware = require('../middlewares/auth-middleware');   
@@ -18,18 +18,18 @@ const authMiddleware = require('../middlewares/auth-middleware');
 
 //! now reducing the "above code" using "AuthController"
 
-router.route('/').get(authcontrollers.home);
+router.route('/').get(authControllers.home);
 
 // router.route('/register').post(authcontrollers.register);
 //^ using middleware to validate zod in this request
 router
     .route('/register')
-    .post(validate(signupSchema), authcontrollers.register);
+    .post(validate(signupSchema), authControllers.register);
 
 router
     .route('/login')
-    .post(validate(loginSchema), authcontrollers.login);
+    .post(validate(loginSchema), authControllers.login);
 
-router.route('/user').get(authMiddleware, authcontrollers.user);
+router.route('/user').get(authMiddleware, authControllers.user);
 
 module.exports = router;

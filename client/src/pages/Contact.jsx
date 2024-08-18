@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "../store/auth";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const Contact = () => {
   const [contact, setContact] = useState({
@@ -11,7 +12,7 @@ export const Contact = () => {
 
   //* Fetching loggedIn user data
   const [userData, setUserData] = useState(true);
-  const { user } = useAuth();
+  const { user, } = useAuth();
   if (userData && user) {
     setContact({
       username: user.username,
@@ -46,7 +47,7 @@ export const Contact = () => {
           ...contact,
           message: "",
         });
-        alert("Message send sucessfully");
+        toast.success("Message sent sucessfully");
       }
     } catch (error) {
       console.error("contact form error");

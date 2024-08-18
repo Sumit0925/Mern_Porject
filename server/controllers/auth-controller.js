@@ -31,7 +31,7 @@ const register = async (req, res) => {
 
         if (userExist) {
 
-            return res.status(400).json({ msg: 'user already exists' });
+            return res.status(400).json({ message: 'user already exists' });
         }
 
 
@@ -53,7 +53,7 @@ const register = async (req, res) => {
         res
             .status(201)
             .send({
-                msg: "Registration Successful",
+                message: "Registration Successful",
                 token: await userCreated.generateToken(),
                 userId: userCreated._id.toString(),
 
@@ -64,7 +64,7 @@ const register = async (req, res) => {
     } catch (error) {
         res
             .status(500)
-            .send({ msg: 'Internal Server Error' })
+            .send({ message: 'Internal Server Error' })
     }
 }
 
@@ -79,7 +79,7 @@ const login = async (req, res) => {
         const userExist = await User.findOne({ email });
 
         if (!userExist) {
-            return res.status(401).send({ msg: 'Invalid Credential' });
+            return res.status(401).send({ message: 'Invalid Credential' });
         }
 
         // const passwordValid = await bcrypt.compare(password, userExist.password); //* do this using "Instance Method"
@@ -94,18 +94,18 @@ const login = async (req, res) => {
         const user = await userExist.isPasswordCorrect(password); //* Using Instance Method
         if (user) {
             return res.status(200).send({
-                msg: "Login Successful",
+                message: "Login Successful",
                 token: await userExist.generateToken(),
                 userID: userExist._id.toString(),
             })
         } else {
-            res.status(401).send({ msg: 'Invalid email or password' });
+            res.status(401).send({ message: 'Invalid email or password' });
         }
 
     } catch (error) {
         res
             .status(500)
-            .send({ msg: 'Invalid Credentials' })
+            .send({ message: 'Invalid Credentials' })
     }
 
 }

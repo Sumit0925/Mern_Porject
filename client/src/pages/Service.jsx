@@ -14,20 +14,18 @@ const Service = () => {
         </div>
 
         <div className="container grid grid-three-cols">
-          
-            {services.map((curService, index) => {
-              const { price,description,provider,service } = curService;
-              return (
-                <ServiceCard
-                  key={index}
-                  service={service}
-                  description={description}
-                  price={price}
-                  provider={provider}
-                />
-              );
-            })}
-          
+          {services.map((curService, index) => {
+            const { price, description, provider, service } = curService;
+            return (
+              <ServiceCard
+                key={index}
+                service={service}
+                description={description}
+                price={price}
+                provider={provider}
+              />
+            );
+          })}
         </div>
       </section>
     </>

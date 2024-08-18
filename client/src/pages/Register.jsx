@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
 
@@ -43,7 +44,7 @@ const Register = () => {
         //   }
         // }
       );
-      console.log(response);
+      // console.log(response);
       if (response.status == "201") {
         // console.log("token",response.data);
         storeTokenInLS(response.data.token);
@@ -54,9 +55,12 @@ const Register = () => {
           password: "",
         });
         navigate('/login');
+        toast.success(response.data.message);
+        // toast.success("Resgistration Successfull");
       }
     } catch (error) {
       console.log("Registration", error);
+      toast.error(error.response.data.extraDetails?error.response.data.extraDetails:error.response.data.message);
     }
   };
 

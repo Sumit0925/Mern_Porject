@@ -17,6 +17,7 @@ const corsOptions = {
   method: "GET,POST,PUT,PATCH,DELETE,HEAD",
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 
 app.use(express.json()); //*This is a "middleware" and it ensures that you can use "json" in your application (i.e It "parses" incoming requests bodies with "JSON" Payloads )

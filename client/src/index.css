@@ -57,6 +57,16 @@ li {
   list-style: none;
 }
 
+/** -----------------------
+**    react-toastify css
+** -------------------------  */
+
+.toastBody {
+  font-family: "Atlas Grotesk Web", Arial, Helvetica, sans-serif;
+  font-size: 1.7rem ;
+}
+
+
 /*? layout Rule  */
 
 .container {
@@ -82,13 +92,14 @@ li {
   margin-bottom: 3px;
 }
 
+
 /*? Module Rules / Reusable */
 button {
   text-transform: capitalize;
   padding: 1rem 2.2rem;
   font-size: 1.7rem;
   font-weight: 500;
-  background-color: var(--btn-color);
+  background-color:  #646cff;
   border-radius: 0.8rem;
   -webkit-border-radius: 0.8rem;
   -moz-border-radius: 0.8rem;
@@ -419,6 +430,7 @@ a.active {
 
 .section-services {
   & .container:first-child {
+
     padding: 0;
   }
 

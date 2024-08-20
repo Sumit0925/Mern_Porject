@@ -42,4 +42,26 @@ const loginSchema = z.object({
         .max(1024, { message: "Password can't be greater than 1024 characters" }),
 })
 
-module.exports = {signupSchema , loginSchema};
+const contactSchema = z.object({
+    username: z
+        .string({ required_error: "Name is required" })
+        .trim()
+        .min(3, { message: "Name must be atleast of 3 characters" })
+        .max(255, { message: "Name must not be more than 255 characters" }),
+
+    email: z
+        .string({ required_error: "Email is required" })
+        .trim()
+        .email({ message: "Invalid email address" })
+        .min(3, { message: "Name must be atleast of 3 characters" })
+        .max(255, { message: "Name must not be more than 255 characters" }),
+
+    message :z
+        .string({required_error:"Message is Required"})
+        .trim()
+        .min(3, { message: "Message must be atleast of 3 characters" })
+
+
+})
+
+module.exports = {signupSchema , loginSchema,contactSchema};

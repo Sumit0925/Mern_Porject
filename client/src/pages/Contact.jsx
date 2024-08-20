@@ -12,7 +12,7 @@ export const Contact = () => {
 
   //* Fetching loggedIn user data
   const [userData, setUserData] = useState(true);
-  const { user, } = useAuth();
+  const { user } = useAuth();
   if (userData && user) {
     setContact({
       username: user.username,
@@ -50,7 +50,12 @@ export const Contact = () => {
         toast.success("Message sent sucessfully");
       }
     } catch (error) {
-      console.error("contact form error");
+      console.error("contact form error", error);
+      toast.error(
+        error.response.data.extraDetails
+          ? error.response.data.extraDetails
+          : error.response.data.message
+      );
     }
   };
 

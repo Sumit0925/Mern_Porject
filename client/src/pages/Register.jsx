@@ -5,29 +5,27 @@ import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
 const Register = () => {
-
-  
   const [user, setUser] = useState({
     username: "",
     email: "",
     phone: "",
     password: "",
   });
-  
+
   const handleChange = (e) => {
     // console.log(e);
-    
+
     let name = e.target.name;
     let value = e.target.value;
-    
+
     setUser({
       ...user,
       [name]: value, //* [name] is a dynamic value i.e username,email,phone,password
     });
   };
-  
+
   const navigate = useNavigate();
-  const {storeTokenInLS} = useAuth();   //* form Context API
+  const { storeTokenInLS } = useAuth(); //* form Context API
 
   //* Hanlde form submit
   const handleSubmit = async (e) => {
@@ -36,7 +34,7 @@ const Register = () => {
     try {
       const response = await axios.post(
         "http://localhost:3000/api/auth/register",
-        user,
+        user
         // {
         //   method: "POST",
         //   headers: {
@@ -54,13 +52,17 @@ const Register = () => {
           phone: "",
           password: "",
         });
-        navigate('/login');
+        navigate("/login");
         toast.success(response.data.message);
         // toast.success("Resgistration Successfull");
       }
     } catch (error) {
       console.log("Registration", error);
-      toast.error(error.response.data.extraDetails?error.response.data.extraDetails:error.response.data.message);
+      toast.error(
+        error.response.data.extraDetails
+          ? error.response.data.extraDetails
+          : error.response.data.message
+      );
     }
   };
 

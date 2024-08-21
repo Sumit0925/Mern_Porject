@@ -10,6 +10,9 @@ import { Navbar } from "./components/Navbar";
 import { Error } from "./pages/Error";
 import { Footer } from "./components/Footer";
 import { Logout } from "./pages/Logout";
+import { AdminLayout } from "./components/layout/AdminLayout";
+import { AdminUsers } from "./pages/AdminUsers";
+import { AdminContacts } from "./pages/AdminContacts";
 
 function App() {
   return (
@@ -24,8 +27,17 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="logout" element={<Logout/>}/>
-
+            {/* For wild path i.e path other than we created */}
           <Route path="*" element={<Error />} />
+
+          {/* Nested Route  */}
+          <Route path="/admin" element={<AdminLayout/>}>
+          {/* To access route under parent route i.e "/admin" you have to use <Outlet/> component in parent route  */}
+            <Route path="users" element={<AdminUsers/>} />
+            <Route path="contacts" element={<AdminContacts/>} />
+          </Route>
+
+
         </Routes>
         <Footer />
       </BrowserRouter>

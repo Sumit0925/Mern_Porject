@@ -13,6 +13,7 @@ import { Logout } from "./pages/Logout";
 import { AdminLayout } from "./components/layout/AdminLayout";
 import { AdminUsers } from "./pages/AdminUsers";
 import { AdminContacts } from "./pages/AdminContacts";
+import { AdminUpdate } from "./pages/AdminUpdate";
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
           {/* To access route under parent route i.e "/admin" you have to use <Outlet/> component in parent route  */}
             <Route path="users" element={<AdminUsers/>} />
             <Route path="contacts" element={<AdminContacts/>} />
+            <Route path="users/:id/edit" element={<AdminUpdate/>} />
           </Route>
 
 

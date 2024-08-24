@@ -41,10 +41,10 @@ const updateUserById = async (req, res) => {
     try {
         const id = req.params.id;
         const updatedUserData = req.body;
-        const UpdatedUser = await User.updateOne({ _id: id }, { $set: updateUserById })
+        const UpdatedUser = await User.updateOne({ _id: id }, { $set: updatedUserData })
         return res.status(200).json({ message: "User Updated Sucessfully!!", UpdatedData: UpdatedUser })
     } catch (error) {
-        next(error)
+        next(error) 
     }
 }
 

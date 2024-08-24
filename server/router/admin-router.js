@@ -2,6 +2,8 @@ const express = require("express");
 const adminControllers = require("../controllers/admin-controller");
 const authMiddleware = require("../middlewares/auth-middleware");
 const adminMiddlware = require("../middlewares/admin-middleware");
+const validate = require("../middlewares/validate-middleware");
+const { AdminUserSchema } = require("../validators/auth-validator");
 const router = express.Router();
 
 
@@ -9,7 +11,7 @@ router.route('/users').get(authMiddleware, adminMiddlware, adminControllers.getA
 
 router.route('/users/:id').get(authMiddleware, adminMiddlware, adminControllers.getUserById);
 
-router.route('/users/update/:id').patch(authMiddleware, adminMiddlware, adminControllers.updateUserById);
+router.route('/users/update/:id').patch(authMiddleware, adminMiddlware,validate(AdminUserSchema), adminControllers.updateUserById);
 
 router.route('/users/delete/:id').delete(authMiddleware, adminMiddlware, adminControllers.deleteUserById);
 

@@ -9,7 +9,7 @@ export const Analytics = () => {
           <p>registered companies</p>
         </div>
         <div className="div1">
-          <h2>100,00+</h2>
+          <h2>100,000+</h2>
           <p>Happy Clients</p>
         </div>
         <div className="div1">

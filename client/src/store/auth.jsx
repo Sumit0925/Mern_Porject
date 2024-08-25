@@ -9,8 +9,11 @@ export const AuthProvider = ({ children }) => {
   //* remember to write {children} in small letters not like this {Children}
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState("");
+  const  [isLoading,setIsLoading] = useState(true);
   const [services, setServices] = useState([]);
   const AuthorizationToken = `Bearer ${token}`;
+
+  const API = import.meta.env.VITE_APP_URI_API;
 
 
   const storeTokenInLS = (serverToken) => {
@@ -18,7 +21,7 @@ export const AuthProvider = ({ children }) => {
     return localStorage.setItem("token", serverToken);
   };
 
-  let isLoggedIn = !!token; //* If the token is present it will be "True" otherwise it will be "Flase"
+  let isLoggedIn = !!token; //* If the token is present it will be "True" otherwise it will be "False"
   // console.log(isLoggedIn);
   
   //* Takling the logout fuctionality
@@ -33,7 +36,7 @@ export const AuthProvider = ({ children }) => {
   //   const userAuthentication = async () => {
   //     try {
   //       const response = await axios.get(
-  //         "http://localhost:3000/api/auth/user",
+  //         `${API}/api/auth/user`,
   //         {
   //           method: "GET",
   //           headers: {
@@ -61,7 +64,8 @@ export const AuthProvider = ({ children }) => {
 
   const userAuthentication = async () => {
     try {
-      const response = await fetch("http://localhost:3000/api/auth/user", {
+      setIsLoading(true);
+      const response = await fetch(`${API}/api/auth/user`, {
         method: "GET",
         headers:{
           Authorization : AuthorizationToken
@@ -71,8 +75,10 @@ export const AuthProvider = ({ children }) => {
         const data = await response.json();
         // our main goal is to get the user data 👇
         // console.log(data);
+        setIsLoading(false);
       setUser(data.userData);
       } else {
+        setIsLoading(false)
         console.error("Error fetching user data");
       }
     } catch (error) {
@@ -84,7 +90,7 @@ export const AuthProvider = ({ children }) => {
   const getServices = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/data/service"
+        `${API}/api/data/service`
       );
       // console.log(response);
       if (response.statusText == "OK") {
@@ -103,10 +109,13 @@ export const AuthProvider = ({ children }) => {
     getServices();
   }, []);
 
+
+
+
   return (
     <>
       <AuthContext.Provider
-        value={{ storeTokenInLS, LogoutUser, isLoggedIn, user, services,AuthorizationToken }}
+        value={{ storeTokenInLS, LogoutUser, isLoggedIn, user, services,AuthorizationToken , isLoading,API,userAuthentication }}
       >
         {children}
       </AuthContext.Provider>

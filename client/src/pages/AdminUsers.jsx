@@ -6,17 +6,15 @@ import { Link } from "react-router-dom";
 
 export const AdminUsers = () => {
   const [users, setUsers] = useState([]);
-  const { AuthorizationToken } = useAuth();
+  const { user, AuthorizationToken, API } = useAuth();
+
   const getAllUsersData = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/admin/users",
-        {
-          headers: {
-            Authorization: AuthorizationToken,
-          },
-        }
-      );
+      const response = await axios.get(`${API}/api/admin/users`, {
+        headers: {
+          Authorization: AuthorizationToken,
+        },
+      });
       // console.log(response);
       if (response.status == "200") {
         const usersData = await response.data;
@@ -31,22 +29,26 @@ export const AdminUsers = () => {
   //* delete the user on delete button
 
   const deleteUser = async (id) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:3000/api/admin/users/delete/${id}`,
-        {
-          headers: {
-            Authorization: AuthorizationToken,
-          },
+    if (user._id !== id) {
+      try {
+        const response = await axios.delete(
+          `${API}/api/admin/users/delete/${id}`,
+          {
+            headers: {
+              Authorization: AuthorizationToken,
+            },
+          }
+        );
+        if (response.status == "200") {
+          // console.log(response);
+          toast.success(response.data.message);
+          getAllUsersData();
         }
-      );
-      if(response.status == "200"){
-        // console.log(response);
-        toast.success(response.data.message);
-        getAllUsersData();
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.error("You Can't Delete yourself!!");
     }
   };
 

@@ -5,6 +5,9 @@ import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
 const Register = () => {
+
+  const {API} = useAuth();
+
   const [user, setUser] = useState({
     username: "",
     email: "",
@@ -33,7 +36,7 @@ const Register = () => {
     console.log(user);
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/auth/register",
+        `${API}/api/auth/register`,
         user
         // {
         //   method: "POST",
@@ -45,7 +48,7 @@ const Register = () => {
       // console.log(response);
       if (response.status == "201") {
         // console.log("token",response.data);
-        storeTokenInLS(response.data.token);
+        // storeTokenInLS(response.data.token);
         setUser({
           username: "",
           email: "",

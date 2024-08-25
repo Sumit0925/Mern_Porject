@@ -80,4 +80,18 @@ const getAllContacts = async (req, res) => {
     }
 }
 
-module.exports = { getAllUsers, getAllContacts, deleteUserById, getUserById, updateUserById };
+//^---------------------
+//^  Deleting CONTACT for Admin Page-LOGIC
+//^-------------------
+
+const deleteContactById = async(req,res)=>{
+    try {
+        const id = req.params.id;
+        await Contact.deleteOne({_id:id});
+        return res.status(200).json({message:"Contact Deleted Sucessfully!!"})
+    } catch (error) {
+        res.status(400).json({ message: "Error in Deleting Contact" });
+    }
+}
+
+module.exports = { getAllUsers, getAllContacts, deleteUserById, getUserById, updateUserById,deleteContactById };

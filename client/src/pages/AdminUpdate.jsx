@@ -11,7 +11,7 @@ export const AdminUpdate = () => {
     phone: "",
   });
 
-  const { AuthorizationToken } = useAuth();
+  const { AuthorizationToken, API } = useAuth();
   //* Fetching single  user data
   const params = useParams();
 
@@ -20,7 +20,7 @@ export const AdminUpdate = () => {
       // console.log(params)
       const id = params.id;
       const response = await axios.get(
-        `http://localhost:3000/api/admin/users/${id}`,
+        `${API}/api/admin/users/${id}`,
         {
           headers: {
             Authorization: AuthorizationToken,
@@ -57,7 +57,7 @@ export const AdminUpdate = () => {
     try {
       const id = params.id;
       const response = await axios.patch(
-        `http://localhost:3000/api/admin/users/update/${id}`,
+        `${API}/api/admin/users/update/${id}`,
         data,
         {
           headers: {

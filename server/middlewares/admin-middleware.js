@@ -9,6 +9,7 @@ const adminMiddlware = async (req, res, next) => {
         //* If user is an admin, proceed to the next Middleware
         next();
     } catch (error) {
+        
         next(error)
     }
 }

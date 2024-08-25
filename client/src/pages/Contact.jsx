@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth } from "../store/auth";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -12,7 +12,15 @@ export const Contact = () => {
 
   //* Fetching loggedIn user data
   const [userData, setUserData] = useState(true);
-  const { user } = useAuth();
+  const { user,isLoggedIn,userAuthentication } = useAuth();
+  
+useEffect(()=>{
+  if(isLoggedIn){
+
+    userAuthentication();
+  }
+},[])
+
   if (userData && user) {
     setContact({
       username: user.username,

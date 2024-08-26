@@ -23,7 +23,7 @@ const About = () => {
               </p>
               <h1>Why Choose Us?</h1>
               <p>
-                Expertise: Our team consists of experienced IT progfessionals
+                Expertise: Our team consists of experienced IT professionals
                 who are passionate about staying up-to-date with the latest
                 industry trends.
               </p>

@@ -12,16 +12,15 @@ export const Contact = () => {
 
   //* Fetching loggedIn user data
   const [userData, setUserData] = useState(true);
-  const { user,isLoggedIn,userAuthentication } = useAuth();
-  
-useEffect(()=>{
-  if(isLoggedIn){
+  const { user, isLoggedIn, userAuthentication } = useAuth();
 
-    userAuthentication();
-  }
-},[])
+  useEffect(() => {
+    if (isLoggedIn) {
+      userAuthentication();
+    }
+  }, []);
 
-  if (userData && user) {
+  if (userData && user && isLoggedIn) {
     setContact({
       username: user.username,
       email: user.email,

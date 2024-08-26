@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "../components/Navbar.css";
 import { useAuth } from "../store/auth";
 
 export const Navbar = () => {
-  const { user, isLoggedIn} = useAuth();
+  const { user, isLoggedIn, userAuthentication } = useAuth();
   // console.log(user.isAdmin)
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      userAuthentication();
+    }
+  }, []);
 
   return (
     <>
@@ -30,7 +36,7 @@ export const Navbar = () => {
                 <NavLink to="/contact">Contact</NavLink>
               </li>
 
-              {user.isAdmin==true && (
+              {user.isAdmin == true && isLoggedIn &&(
                 <li>
                   <NavLink to="/admin">Admin</NavLink>
                 </li>

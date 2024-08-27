@@ -18,8 +18,8 @@ const About = () => {
           <div className="container grid grid-two-cols">
             <div className="hero-content">
               <p>
-                Welcome,{" "}
-                {user ? `${user.username} to our website` : `to our website`}{" "}
+                Welcome,
+                {user ? ` ${user.username} to our website` : `to our website`}
               </p>
               <h1>Why Choose Us?</h1>
               <p>

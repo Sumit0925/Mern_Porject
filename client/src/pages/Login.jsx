@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
-
 const Login = () => {
-  
-  const {API}=useAuth();
+  const { API, isLoggedIn } = useAuth();
 
   const URL = `${API}/api/auth/login`;
-  
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -55,12 +53,19 @@ const Login = () => {
         toast.success(res_data.message);
         // toast.success("Login Successfull");
       } else {
-        toast.error(res_data.extraDetails?res_data.extraDetails:res_data.message);
+        toast.error(
+          res_data.extraDetails ? res_data.extraDetails : res_data.message
+        );
       }
     } catch (error) {
       console.log("Login", error);
     }
   };
+
+  if (isLoggedIn) {
+    return <Navigate to={"/"} />;
+  }
+
   return (
     <>
       <section>

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { toast } from "react-toastify";
 
 const Register = () => {
-
-  const {API} = useAuth();
+  const { API, isLoggedIn } = useAuth();
 
   const [user, setUser] = useState({
     username: "",
@@ -68,6 +67,10 @@ const Register = () => {
       );
     }
   };
+
+  if (isLoggedIn) {
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <>

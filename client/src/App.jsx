@@ -14,8 +14,12 @@ import { AdminLayout } from "./components/layout/AdminLayout";
 import { AdminUsers } from "./pages/AdminUsers";
 import { AdminContacts } from "./pages/AdminContacts";
 import { AdminUpdate } from "./pages/AdminUpdate";
+import { useAuth } from "./store/auth";
 
 function App() {
+  
+  const {isLoggedIn} = useAuth();
+
   return (
     <>
       <BrowserRouter>

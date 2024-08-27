@@ -67,7 +67,7 @@ export const AdminContacts = () => {
                 <th>Delete</th>
               </tr>
             </thead>
-            <tbody className>
+            <tbody >
               {contacts.map((curContact, index) => {
                 const { _id, username, email, message } = curContact;
                 return (

@@ -5,16 +5,27 @@ export const AuthContext = createContext();
 
 //* creating provider
 export const AuthProvider = ({ children }) => {
-
   //* remember to write {children} in small letters not like this {Children}
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [user, setUser] = useState("");
-  const  [isLoading,setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [services, setServices] = useState([]);
+  const [admin, setAdmin] = useState(localStorage.getItem("admin"));
   const AuthorizationToken = `Bearer ${token}`;
 
   const API = import.meta.env.VITE_APP_URI_API;
 
+  // //* setting role in local Storage
+  // const storeRoleInLS = (userRole) => {
+  //   setAdmin(userRole);
+  //   return localStorage.setItem("role", userRole);
+  // };
+
+  // //* removing role from local Storage
+  // const removingRoleInLS = () => {
+  //   setAdmin("");
+  //   return localStorage.removeItem("role");
+  // };
 
   const storeTokenInLS = (serverToken) => {
     setToken(serverToken);
@@ -23,7 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   let isLoggedIn = !!token; //* If the token is present it will be "True" otherwise it will be "False"
   // console.log(isLoggedIn);
-  
+
   //* Takling the logout fuctionality
   const LogoutUser = () => {
     setToken("");
@@ -67,18 +78,18 @@ export const AuthProvider = ({ children }) => {
       setIsLoading(true);
       const response = await fetch(`${API}/api/auth/user`, {
         method: "GET",
-        headers:{
-          Authorization : AuthorizationToken
-        }
+        headers: {
+          Authorization: AuthorizationToken,
+        },
       });
       if (response.ok) {
         const data = await response.json();
         // our main goal is to get the user data 👇
-        // console.log(data);
+        // console.log("data",data.userData);
         setIsLoading(false);
-      setUser(data.userData);
+        setUser(data.userData);
       } else {
-        setIsLoading(false)
+        setIsLoading(false);
         console.error("Error fetching user data");
       }
     } catch (error) {
@@ -89,9 +100,7 @@ export const AuthProvider = ({ children }) => {
   //* takling fetching service data from database
   const getServices = async () => {
     try {
-      const response = await axios.get(
-        `${API}/api/data/service`
-      );
+      const response = await axios.get(`${API}/api/data/service`);
       // console.log(response);
       if (response.statusText == "OK") {
         // console.log(response.data.serviceData);
@@ -103,19 +112,27 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if(isLoggedIn){
+    if (isLoggedIn) {
       userAuthentication();
     }
     getServices();
   }, []);
 
-
-
-
   return (
     <>
       <AuthContext.Provider
-        value={{ storeTokenInLS, LogoutUser, isLoggedIn, user, services,AuthorizationToken , isLoading,API,userAuthentication }}
+        value={{
+          token,
+          storeTokenInLS,
+          LogoutUser,
+          isLoggedIn,
+          user,
+          services,
+          AuthorizationToken,
+          isLoading,
+          API,
+          userAuthentication,
+        }}
       >
         {children}
       </AuthContext.Provider>

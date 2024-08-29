@@ -18,12 +18,12 @@ function Home() {
                 tailored to meet your unique needs.
               </p>
               <div className="btn btn-group">
-                <a href="/contact">
+              <NavLink to="/contact">
                   <button className="btn">Connect Now</button>
-                </a>
-                <a href="/services">
-                  <button className="btn secondary-btn">learn more</button>
-                </a>
+                </NavLink>
+                <NavLink to="/services">
+                  <button className="secondary-btn">Learn More</button>
+                </NavLink>
               </div>
             </div>
             {/* hero images */}
